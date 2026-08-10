@@ -60,6 +60,22 @@
             text-decoration: underline;
         }
 
+        .home-link {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 18px;
+            background-color: #1a5276;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .home-link:hover {
+            background-color: #5d9cec;
+        }
+
         .contenedor-tablas {
             display: flex;
             justify-content: center;
@@ -107,7 +123,7 @@
         <p>Hola, soy Joaquin. Me gusta programar y aprender cosas nuevas.</p>
         <a href="https://github.com/joaquin-Gonzalez-Bossi" target="_blank" class="github-link">Mi perfil de GitHub</a>
         <nav>
-            <a href="{% url 'tiendalibre:home' %}">Volver al Home</a>
+            <a href="{% url 'tiendalibre:home' %}" class="home-link">Volver al Home</a>
         </nav>
     </div>
 
