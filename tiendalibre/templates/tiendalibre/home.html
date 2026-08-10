@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio | Tienda Libre</title>
+</head>
+<body>
+  <h1>Bienvenido a Tienda Libre</h1>
+  <p>Esta es la página principal de la app.</p>
+  <nav>
+    <a href="{% url 'tiendalibre:home' %}">Inicio</a> |
+    <a href="{% url 'tiendalibre:acerca_de_mi' %}">Acerca de mí</a> |
+    <a href="/admin/">Admin</a>
+  </nav>
+</body>
+</html>
