@@ -12,14 +12,14 @@ class ProductoAdmin(admin.ModelAdmin):
 
     def mostrar_miniatura(self, obj):
         if obj.imagen:
-            return format_html('<img src="{}" width="50" height="50" />',obj.imagen.url)
+            return format_html('<img src="{}" width="70" height="50" />',obj.imagen.url)
         return "sin imagen"
     
     mostrar_miniatura.short_description = 'Miniatura'
     
     def mostrar_imagen_detalle(self, obj):
         if obj.imagen:
-            return format_html('<img src="{}" width="300" height="300" />',obj.imagen.url)
+            return format_html('<img src="{}" width="500" height="300" />',obj.imagen.url)
         return "sin imagen"
     
     mostrar_imagen_detalle.short_description = 'Previsualización de la imagen'
