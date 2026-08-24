@@ -1,122 +1,77 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>{% block title %}Tienda Libre{% endblock %}</title>
-
-    <!-- Bootstrap 5.3 -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         :root {
-            --tienda-ink: #17212b;
-            --tienda-coral: #e85d4a;
-            --tienda-sky: #dff3f4;
-            --tienda-cream: #fffaf2;
+            --tienda-blue: #111213;
+            --tienda-cyan: #a7acad;
+        }
+
+        .navbar-tienda {
+            background: linear-gradient(90deg, var(--tienda-blue), #1261c9);
+        }
+
+        .navbar-tienda .navbar-brand {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .navbar-tienda .nav-link {
+            color: #ffffff !important;
+        }
+
+        .navbar-tienda .nav-link:hover,
+        .navbar-tienda .nav-link:focus {
+            color: #ffffff !important;
+        }
+
+        html,
+        body {
+            min-height: 100%;
         }
 
         body {
-            background-color: var(--tienda-cream);
-            color: var(--tienda-ink);
+            display: flex;
+            flex-direction: column;
+            background-color: #f4f7fb;
         }
 
-        .navbar-tienda,
+        main {
+            flex: 1;
+        }
+
         .footer-tienda {
-            background-color: var(--tienda-ink);
+            margin-top: 3rem;
+            padding: 1.5rem 1rem;
+            background: #0b3d91;
+            color: #fff;
+            text-align: center;
+            border-top: 4px solid #00bfff;
         }
 
-        .brand-mark {
-            color: #ffd166;
-        }
-
-        .btn-tienda {
-            background-color: var(--tienda-coral);
-            border-color: var(--tienda-coral);
-            color: white;
-        }
-
-        .btn-tienda:hover {
-            background-color: #c94b3b;
-            border-color: #c94b3b;
-            color: white;
+        .footer-tienda p {
+            margin: 0;
+            font-size: 0.95rem;
         }
     </style>
 
-    {% block extra_css %}
-    {% endblock %}
+    {% block extra_head %}{% endblock %}
 </head>
 
 <body>
+    {% include "tiendalibre/_navbar.html" %}
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-tienda">
-        <div class="container">
-
-            <a class="navbar-brand fw-bold" href="{% url 'tiendalibre:home' %}">
-                <span class="brand-mark" aria-hidden="true">✦</span> Tienda Libre
-            </a>
-
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-
-                <ul class="navbar-nav ms-auto">
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tiendalibre:home' %}">
-                            Inicio
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tiendalibre:acerca_de_mi' %}">
-                            Acerca de mí
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-        </div>
-    </nav>
-
-
-    <!-- CONTENIDO DE CADA PÁGINA -->
-    <main>
-        {% block content %}
-        {% endblock %}
+    <main class="container mt-5">
+        {% block content %}{% endblock %}
     </main>
 
-
-    <!-- FOOTER -->
-    <footer class="footer-tienda text-white text-center py-3 mt-5">
-        <p class="mb-0">
-            © 2026 - Tienda Libre | Desarrollado con Django
-        </p>
-    </footer>
-
-
+    
     <!-- Bootstrap JS -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    ></script>
-
-    {% block extra_js %}
-    {% endblock %}
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

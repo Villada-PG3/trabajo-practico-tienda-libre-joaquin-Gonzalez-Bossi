@@ -1,16 +1,172 @@
 {% extends 'tiendalibre/base.html' %}
+{%load static %}
 {% block title %}Inicio | Tienda Libre{% endblock %}
+
+{% block extra_head %}
+<style>
+    .inicio-tienda h1,
+    .inicio-tienda h2 {
+        color: #111213;
+    }
+
+    .productos-lista {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .producto-bloque {
+        align-items: center;
+        background: #fff;
+        border-left: 5px solid #1261c9;
+        border-radius: 4px;
+        box-shadow: 0 3px 12px rgba(17, 18, 19, .08);
+        display: flex;
+        justify-content: space-between;
+        min-height: 170px;
+        overflow: hidden;
+        padding: 1.25rem 1.5rem;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .producto-bloque:hover {
+        box-shadow: 0 6px 18px rgba(17, 18, 19, .14);
+        transform: translateY(-2px);
+    }
+
+    .producto-info {
+        padding-right: 1.5rem;
+    }
+
+    .producto-info h3 {
+        color: #1261c9;
+        font-size: 1.25rem;
+        margin-bottom: .75rem;
+    }
+
+    .producto-info p {
+        margin-bottom: .35rem;
+    }
+
+    .producto-imagen {
+        height: 135px;
+        object-fit: contain;
+        width: 180px;
+    }
+
+    .stock-disponible,
+    .stock-agotado {
+        border-radius: 3px;
+        display: inline-block;
+        font-size: .85rem;
+        padding: .2rem .5rem;
+    }
+
+    .stock-disponible {
+        background: #d8f3dc;
+        color: #1b6b35;
+    }
+
+    .stock-agotado {
+        background: #ffe0e0;
+        color: #a12626;
+    }
+
+    .enlaces-inicio {
+        align-items: center;
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        margin: 2rem 0 2.5rem;
+    }
+
+    .enlaces-inicio a {
+        background: #fff;
+        border: 1px solid #111213;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(17, 18, 19, .1);
+        color: #000;
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: .7rem 1rem;
+        text-decoration: none;
+        transition: background-color .2s ease, color .2s ease;
+    }
+
+    .enlaces-inicio a:hover {
+        background: #5d9cec;
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+        .producto-bloque {
+            min-height: 145px;
+            padding: 1rem;
+        }
+
+        .producto-imagen {
+            height: 105px;
+            width: 110px;
+        }
+
+        .producto-info {
+            padding-right: .75rem;
+        }
+
+        .enlaces-inicio {
+            flex-direction: column;
+            gap: .75rem;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
+    <div class="inicio-tienda">
+        <h1 class="text-center mb-4">Bienvenido a Tienda Libre</h1>
 
-  <div class="page-wrapper">
-  <div class="hero">
-    <h1>Bienvenido a Tienda Libre</h1>
-    <p>Esta es la página principal de la app. Explora productos, conoce más sobre el desarrollador y vuelve siempre que quieras.</p>
-    <div class="nav-links">
-    <a href="{% url 'tiendalibre:home' %}">Inicio</a>
-    <a href="{% url 'tiendalibre:acerca_de_mi' %}">Acerca de mí</a>
-    <a href="/admin/">Admin</a>
+        <div class="enlaces-inicio">
+            <a href="{% url 'tiendalibre:acerca_de_mi' %}">Acerca de mí -&gt;</a>
+            <a href="{% url 'admin:index' %}">Ver Productos (Admin) -&gt;</a>
+        </div>
+
+        {% if esta_logueado %}
+            <div class="alert alert-success text-center" role="alert">
+                Aqui estan los productos disponibles.
+            </div>
+
+            <h2 class="mt-4 mb-3">Productos</h2>
+            <div class="productos-lista">
+                {% for producto in productos %}
+                        <article class="producto-bloque">
+                            <div class="producto-info">
+                                <h3>{{ producto.nombre }}</h3>
+                                <p><strong>Marca:</strong> {{ producto.marca }}</p>
+                                <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+                                <p>
+                                    <strong>Stock:</strong>
+                                    {% if producto.stock > 0 %}
+                                        <span class="stock-disponible">{{ producto.stock }} disponibles</span>
+                                    {% else %}
+                                        <span class="stock-agotado">Sin stock</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            {% if producto.imagen %}
+                                <img src="{{ producto.imagen.url }}" class="producto-imagen" alt="{{ producto.nombre }}">
+                            {% endif %}
+                        </article>
+                {% empty %}
+                    <div class="col-12">
+                        <p class="alert alert-warning text-center">No hay productos cargados.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center" role="alert">
+                Se requiere estar logueado para ver los productos.
+            </div>
+        {% endif %}
+
     </div>
-  </div>
-
 {% endblock %}
