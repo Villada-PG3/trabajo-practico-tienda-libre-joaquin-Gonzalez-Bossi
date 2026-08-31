@@ -12,9 +12,10 @@ def home_1(request):
 
 def home(request):
     contexto = {
-        'productos': Producto.objects.all()[:6],
-        'titulo': 'Tienda Libre',
-        'esta_logueado': True, #False muestra un mensaje que se necesita estar logueado
+        'titulo': 'Ofertas de la semana',
+        'usuario_logueado': True,
+        'esta_logueado': True,
+        'productos_destacados': list(Producto.objects.all()[:6]),
     }
     return render(request, 'tiendalibre/home.html', contexto)
 
