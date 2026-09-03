@@ -100,7 +100,13 @@
         {% endif %}
     </div>
 
-    <h2 class="mt-5 mb-4">{{ titulo }}</h2>
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mt-5 mb-4">
+        <div>
+            <h2 class="mb-1">{{ titulo|title }}</h2>
+            <p class="text-muted mb-0">{{ productos_destacados|length }} productos destacados</p>
+        </div>
+        <p class="text-muted mb-0">Actualizado el {{ fecha_actualizacion|date:"d/m/Y" }}</p>
+    </div>
 
     <div class="row g-3">
         {% for producto in productos_destacados %}
@@ -108,9 +114,10 @@
             <div class="card h-100">
                 <div class="card-body">
                     <div class="card-info">
-                        <h5 class="card-title">{{ producto.nombre }}</h5>
-                        <p class="card-description">{{ producto.descripcion }}</p>
-                        <p class="card-text">${{ producto.precio }}</p>
+                        <h5 class="card-title">{{ producto.nombre|title }}</h5>
+                        <p class="card-description">{{ producto.descripcion|default:"Descripción no disponible"|truncatechars:50 }}</p>
+                        <p class="card-text">Marca: {{ producto.marca|upper }}</p>
+                        <p class="card-text">${{ producto.precio|floatformat:2|default:"Sin precio" }}</p>
 
                         {% if producto.stock == 0 %}
                             <p class="stock-agotado">Stock: {{ producto.stock }}</p>

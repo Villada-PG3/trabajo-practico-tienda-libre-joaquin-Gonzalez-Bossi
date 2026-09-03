@@ -1,8 +1,12 @@
+from datetime import date
+
 from django.shortcuts import render
 from django.http import HttpResponse
 # Create your views here.
 from django.views.generic import TemplateView
+
 from .models import Producto
+
 
 class TiendaTemplateView(TemplateView):
     template_name = 'tienda.html'
@@ -11,11 +15,16 @@ def home_1(request):
     return HttpResponse("<h1>Bienvenido a la tienda Libre de Maximo Corallo Margosian</h1>")
 
 def home(request):
+    productos_destacados = list(Producto.objects.all()[:6])
+    if productos_destacados:
+        productos_destacados[-1].precio = None
+
     contexto = {
         'titulo': 'Ofertas de la semana',
         'usuario_logueado': True,
         'esta_logueado': True,
-        'productos_destacados': list(Producto.objects.all()[:6]),
+        'fecha_actualizacion': date(2026, 7, 20),
+        'productos_destacados': productos_destacados,
     }
     return render(request, 'tiendalibre/home.html', contexto)
 
