@@ -26,6 +26,7 @@ class Producto(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField(default=0)
+    activo = models.BooleanField(default=True)
     marca = models.CharField(max_length=50, default='Marca Desconocida')
     imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
 
