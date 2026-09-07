@@ -1,110 +1,31 @@
+1) Producto.objects.all() 
+Devuelve un QuerySet con todos los productos.
 
+2) Producto.objects.count()
+Devuelve un número entero del total de productos.
 
-Para abrir el shell desde la carpeta del proyecto:
+3) Producto.objects.filter(precio__gt=1000)
+Filtra productos con precio mayor a 1000, gt = greater than.
 
-```bash
-python manage.py shell
-```
+4) Producto.objects.filter(nombre__icontains='')
+Filtra productos cuyo nombre contenga lo buscado, icontains = no distingue mayusculas.
 
-Importamos los modelos:
+5) Producto.objects.get(id=1)
+Obtener un producto específico por ID.
 
-```python
-from tiendalibre.models import Producto, Categoria
-```
+6) Producto.objects.filter(stock__in=[])
+Filtrar productos con stock en valores específicos.
 
+7)  producto = Producto.objects.get(id=1)
+    print(producto.categoria.nombre)  
+Accede a la categoría relacionada al producto.
 
+8)  categoria = Categoria.objects.get(nombre='Condimentos')
+    print(categoria.productos.all())  
+Accede a todos los productos de una categoría.
 
-`all()` devuelve un `QuerySet` con todos los productos. La consulta se ejecuta cuando lo recorremos o mostramos.
+9) Producto.objects.exclude(stock=0)
+Excluye productos sin stock (stock diferente de 0).
 
-```python
-productos = Producto.objects.all()
-list(productos)
-```
-
-
-`filter()` devuelve un `QuerySet`, aunque haya cero, uno o muchos resultados.
-
-```python
-Producto.objects.filter(marca="Coca-Cola")
-```
-
-
-El lookup `__icontains` busca un texto dentro del campo sin distinguir mayúsculas y minúsculas.
-
-```python
-Producto.objects.filter(nombre__icontains="agua")
-```
-
-
-El lookup `__gt` significa greater than, es decir, mayor que.
-
-```python
-Producto.objects.filter(precio__gt=3000)
-```
-
-
-
-El lookup `__lt` significa less than, es decir, menor que.
-
-```python
-Producto.objects.filter(stock__lt=20)
-```
-
-
-
-El lookup `__in` devuelve productos cuyo campo coincide con alguno de los valores de la lista.
-
-```python
-Producto.objects.filter(marca__in=["Coca-Cola", "Villavicencio", "Alicante"])
-```
-
-
-
-`exclude()` elimina los productos que cumplen la condición. `order_by()` ordena el resultado; el signo `-` indica orden descendente.
-
-```python
-Producto.objects.exclude(stock=0).order_by("-precio")
-```
-
-
-
-`get()` debe encontrar exactamente un objeto. Si no encuentra ninguno lanza `DoesNotExist`; si encuentra más de uno lanza `MultipleObjectsReturned`.
-
-```python
-producto = Producto.objects.get(nombre="Agua")
-producto.precio
-```
-
-A diferencia de `filter()`, `get()` devuelve un objeto `Producto`, no un `QuerySet`.
-
-
-Desde un producto accedemos a su categoría mediante `categoria`. Desde una categoría accedemos a sus productos mediante el `related_name` `productos`.
-
-```python
-producto = Producto.objects.exclude(categoria=None).first()
-producto.categoria.nombre
-
-categoria = Categoria.objects.first()
-categoria.productos.all()
-```
-
-
-
-`create()` crea y guarda el producto en la base de datos en una sola operación. La categoría es opcional porque el modelo permite valores nulos.
-
-```python
-producto_nuevo = Producto.objects.create(
-    nombre="Producto de prueba",
-    descripcion="Creado desde Django shell",
-    precio=1999.99,
-    stock=10,
-    marca="Marca de prueba",
-)
-producto_nuevo
-```
-
-Para borrar el producto de prueba después de revisarlo:
-
-```python
-producto_nuevo.delete()
-```
+10) Producto.objects.filter(nombre__startswith='')
+Filtra productos cuyo nombre comience con una letra (x).
