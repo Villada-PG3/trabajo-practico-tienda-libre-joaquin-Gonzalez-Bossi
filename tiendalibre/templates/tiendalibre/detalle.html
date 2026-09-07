@@ -1,0 +1,24 @@
+{extends "tiendalibre/base.html"}
+
+{% block title %}{{producto.nombre}} - Tienda Libre {% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'tiendalibre:home' %}">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'tiendalibre:catalogo' %}">Catálogo</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ producto.nombre }}</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ producto.imagen.url }}" class="img-fluid" alt="{{ producto.nombre }}">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ producto.nombre }}</h1>
+            {% if producto.categoria %}
+                <p><strong>Categoría:</strong> {{ producto.categoria.nombre }}</p>
+            {% endif %}
+            <p>{{ producto.descripcion }}</p>
+            <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+        </div>

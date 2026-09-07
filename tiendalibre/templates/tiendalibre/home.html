@@ -102,6 +102,41 @@
 
     <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mt-5 mb-4">
         <div>
+            <h2 class="mb-1">Productos recientes</h2>
+            <p class="text-muted mb-0">{{ productos_recientes|length }} productos nuevos</p>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-5">
+        {% for producto in productos_recientes %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-info">
+                        <h5 class="card-title">{{ producto.nombre|title }}</h5>
+                        <p class="card-description">{{ producto.descripcion|default:"Descripción no disponible"|truncatechars:50 }}</p>
+                        <p class="card-text">Marca: {{ producto.marca|upper }}</p>
+                        <p class="card-text">${{ producto.precio|floatformat:2 }}</p>
+                        <p class="stock-alto">Stock: {{ producto.stock }}</p>
+                    </div>
+
+                    {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" class="product-thumb" alt="{{ producto.nombre }}">
+                    {% else %}
+                        <img src="{% static 'tiendalibre/images/default-product.png' %}" class="product-thumb" alt="{{ producto.nombre }}">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning text-center">No hay productos recientes.</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mt-5 mb-4">
+        <div>
             <h2 class="mb-1">{{ titulo|title }}</h2>
             <p class="text-muted mb-0">{{ productos_destacados|length }} productos destacados</p>
         </div>
