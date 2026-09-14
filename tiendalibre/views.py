@@ -2,11 +2,11 @@ from datetime import date
 
 from django.shortcuts import render
 from django.http import HttpResponse
-# Create your views here.
+from django.template import loader
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 
 from .models import Producto
-from django.shortcuts import get_object_or_404
 
 class TiendaTemplateView(TemplateView):
     template_name = 'tienda.html'
@@ -40,7 +40,5 @@ def catalogo(request):
     return render(request, 'tiendalibre/catalogo.html', contexto)
 
 def detalle_producto(request, pk):
-    producto = Producto.objects.filter(pk=pk)
     producto = get_object_or_404(Producto, pk=pk)
-    contexto = {'producto': producto,}
-    return render(request, 'tiendalibre/producto_detalle.html', contexto)
+    return render(request, "tiendalibre/detalle.html", {"producto": producto})

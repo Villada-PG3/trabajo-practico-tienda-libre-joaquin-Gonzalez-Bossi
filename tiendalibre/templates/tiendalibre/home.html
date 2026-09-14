@@ -74,6 +74,21 @@
         border: 1px solid rgba(0, 0, 0, 0.08);
         flex-shrink: 0;
     }
+
+    .product-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+
+    .product-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .product-card a {
+        text-decoration: none;
+        color: inherit;
+    }
 </style>
 {% endblock %}
 
@@ -110,22 +125,24 @@
     <div class="row g-3 mb-5">
         {% for producto in productos_recientes %}
         <div class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="card-info">
-                        <h5 class="card-title">{{ producto.nombre|title }}</h5>
-                        <p class="card-description">{{ producto.descripcion|default:"Descripción no disponible"|truncatechars:50 }}</p>
-                        <p class="card-text">Marca: {{ producto.marca|upper }}</p>
-                        <p class="card-text">${{ producto.precio|floatformat:2 }}</p>
-                        <p class="stock-alto">Stock: {{ producto.stock }}</p>
-                    </div>
+            <div class="card h-100 product-card">
+                <a href="{% url 'tiendalibre:detalle_producto' pk=producto.pk %}" class="d-block h-100">
+                    <div class="card-body">
+                        <div class="card-info">
+                            <h5 class="card-title">{{ producto.nombre|title }}</h5>
+                            <p class="card-description">{{ producto.descripcion|default:"Descripción no disponible"|truncatechars:50 }}</p>
+                            <p class="card-text">Marca: {{ producto.marca|upper }}</p>
+                            <p class="card-text">${{ producto.precio|floatformat:2 }}</p>
+                            <p class="stock-alto">Stock: {{ producto.stock }}</p>
+                        </div>
 
-                    {% if producto.imagen %}
-                        <img src="{{ producto.imagen.url }}" class="product-thumb" alt="{{ producto.nombre }}">
-                    {% else %}
-                        <img src="{% static 'tiendalibre/images/default-product.png' %}" class="product-thumb" alt="{{ producto.nombre }}">
-                    {% endif %}
-                </div>
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" class="product-thumb" alt="{{ producto.nombre }}">
+                        {% else %}
+                            <img src="{% static 'tiendalibre/images/default-product.png' %}" class="product-thumb" alt="{{ producto.nombre }}">
+                        {% endif %}
+                    </div>
+                </a>
             </div>
         </div>
         {% empty %}
@@ -146,31 +163,33 @@
     <div class="row g-3">
         {% for producto in productos_destacados %}
         <div class="col-12 col-md-6 col-lg-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="card-info">
-                        <h5 class="card-title">{{ producto.nombre|title }}</h5>
-                        <p class="card-description">{{ producto.descripcion|default:"Descripción no disponible"|truncatechars:50 }}</p>
-                        <p class="card-text">Marca: {{ producto.marca|upper }}</p>
-                        <p class="card-text">${{ producto.precio|floatformat:2|default:"Sin precio" }}</p>
+            <div class="card h-100 product-card">
+                <a href="{% url 'tiendalibre:detalle_producto' pk=producto.pk %}" class="d-block h-100">
+                    <div class="card-body">
+                        <div class="card-info">
+                            <h5 class="card-title">{{ producto.nombre|title }}</h5>
+                            <p class="card-description">{{ producto.descripcion|default:"Descripción no disponible"|truncatechars:50 }}</p>
+                            <p class="card-text">Marca: {{ producto.marca|upper }}</p>
+                            <p class="card-text">${{ producto.precio|floatformat:2|default:"Sin precio" }}</p>
 
-                        {% if producto.stock == 0 %}
-                            <p class="stock-agotado">Stock: {{ producto.stock }}</p>
-                        {% elif producto.stock <= 5 %}
-                            <p class="stock-bajo">Stock: {{ producto.stock }}</p>
-                        {% elif producto.stock <= 15 %}
-                            <p class="stock-medio">Stock: {{ producto.stock }}</p>
+                            {% if producto.stock == 0 %}
+                                <p class="stock-agotado">Stock: {{ producto.stock }}</p>
+                            {% elif producto.stock <= 5 %}
+                                <p class="stock-bajo">Stock: {{ producto.stock }}</p>
+                            {% elif producto.stock <= 15 %}
+                                <p class="stock-medio">Stock: {{ producto.stock }}</p>
+                            {% else %}
+                                <p class="stock-alto">Stock: {{ producto.stock }}</p>
+                            {% endif %}
+                        </div>
+
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" class="product-thumb" alt="{{ producto.nombre }}">
                         {% else %}
-                            <p class="stock-alto">Stock: {{ producto.stock }}</p>
+                            <img src="{% static 'tiendalibre/images/default-product.png' %}" class="product-thumb" alt="{{ producto.nombre }}">
                         {% endif %}
                     </div>
-
-                    {% if producto.imagen %}
-                        <img src="{{ producto.imagen.url }}" class="product-thumb" alt="{{ producto.nombre }}">
-                    {% else %}
-                        <img src="{% static 'tiendalibre/images/default-product.png' %}" class="product-thumb" alt="{{ producto.nombre }}">
-                    {% endif %}
-                </div>
+                </a>
             </div>
         </div>
         {% empty %}
