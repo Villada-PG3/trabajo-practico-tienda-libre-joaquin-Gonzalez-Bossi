@@ -51,9 +51,11 @@
     <div class="row g-4 align-items-center">
         <div class="col-lg-6">
             {% if producto.imagen %}
-                <img src="{{ producto.imagen.url }}" class="detail-image" alt="{{ producto.nombre }}">
+                <img src="{{ producto.imagen.url }}"
+                     class="detail-image"
+                     alt="{{ producto.nombre }}">
             {% else %}
-                <img src="https://via.placeholder.com/600x500?text=Producto" class="detail-image" alt="{{ producto.nombre }}">
+                <p>Este producto todavía no tiene una imagen.</p>
             {% endif %}
         </div>
 
@@ -73,7 +75,7 @@
 
                 <div class="d-flex gap-3 flex-wrap">
                     <button type="button" class="detail-btn">Agregar al carrito</button>
-                    <a href="{% url 'tiendalibre:catalogo' %}" class="btn btn-outline-secondary">Volver al catálogo</a>
+                    <a href="{% url 'tiendalibre:catalogo' %}" class="btn btn-outline-secondary">← Volver al catálogo</a>
                 </div>
             </div>
         </div>

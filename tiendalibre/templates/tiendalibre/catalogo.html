@@ -47,7 +47,12 @@
         <div class="col-md-4 mb-4">
             <a href="{% url 'tiendalibre:detalle_producto' pk=producto.pk %}" class="catalog-link">
                 <div class="card h-100 product-card">
-                    <img src="{{ producto.imagen.url }}" class="card-img-top catalog-product-image" alt="{{ producto.nombre }}">
+                    {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}"
+                         class="card-img-top catalog-product-image"
+                         alt="{{ producto.nombre }}">
+                    {% endif %}
+
                     <div class="card-body">
                         <h5 class="card-title">{{ producto.nombre }}</h5>
                         {% if producto.categoria %}
